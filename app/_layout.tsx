@@ -8,6 +8,8 @@ import '../tamagui-web.css'
 import { config } from '../tamagui.config'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
+import '@invertase/react-native-apple-authentication'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -53,6 +55,7 @@ function RootLayoutNav() {
   
 
   return (
+    <GestureHandlerRootView>
     <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
       <ThemeProvider value={colorScheme === 'light' ? DarkTheme : DefaultTheme}>
         <Stack>
@@ -60,8 +63,10 @@ function RootLayoutNav() {
           <Stack.Screen name="home" options={{headerShown:false}}></Stack.Screen>
         <Stack.Screen name='signup' options={{headerShown: false}}></Stack.Screen>
         <Stack.Screen name='forms' options={{headerShown: false}}></Stack.Screen>
+        <Stack.Screen name='apphome' options={{headerShown: false}}></Stack.Screen>
         </Stack>
       </ThemeProvider>
     </TamaguiProvider>
+    </GestureHandlerRootView>
   )
 }

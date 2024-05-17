@@ -3,8 +3,8 @@ import Svg, { SvgProps, Path } from "react-native-svg"
 const Art = (props: SvgProps) => (
   <Svg
   
-    width={75}
-    height={65}
+      width={"100%"}
+    height={"100%"}
     viewBox="0 0 3000 3000"
     fill={"#7f5539"}
     {...props}

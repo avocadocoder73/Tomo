@@ -10,7 +10,7 @@ import Animated, {
 import { StyleSheet, Image } from "react-native";
 import { Gesture, GestureDetector, GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { View, Circle } from "tamagui";
 import * as ImagePicker from 'expo-image-picker';
 import { useRef } from "react";
@@ -18,7 +18,14 @@ import { useRef } from "react";
 export function PhotoRect(number : any)
 {
     const [image, setImage] = useState([] as any);
+    const ref = useRef<HTMLInputElement>(null)
 
+    useEffect(() => {
+        if(ref.current)
+        {
+            console.log(ref?.current?.getBoundingClientRect())
+        }
+    }, [])
     
 
     const styles = StyleSheet.create({
@@ -75,6 +82,21 @@ export function PhotoRect(number : any)
             backgroundColor:"#e6ccb2",
             position:"absolute"
         },
+        plus3:
+        {
+            width:15,
+            height:2,
+            backgroundColor:"#e6ccb2",
+            position:"absolute",
+            transform:"rotate(45deg)"
+        },
+        plus4:{
+            width:15,
+            height:2,
+            backgroundColor:"#e6ccb2",
+            position:"absolute",
+            transform:"rotate(135deg)"
+        },
         insidecir2:{
             position:"absolute",
             top:130,
@@ -112,7 +134,7 @@ export function PhotoRect(number : any)
         const spot = [...image]
         spot[0] = result.assets[0].uri
         setImage(result.assets[0].uri)
-        console.log(spot)
+        console.log(result.assets[0].uri)
         
     }
     
@@ -129,9 +151,18 @@ export function PhotoRect(number : any)
     const END_POSITION = 200;
 
     const pan = Gesture.Pan().runOnJS(true).onStart(() => {
+
+       
+ 
         context1.value = {x: position.value, y: positionY.value}
         context.value = {x: position.value, y: positionY.value}
     }).onUpdate((e) => {
+
+        if(image.length == 0)
+        {
+            return
+        }
+        
         position.value = e.translationX + context.value.x
         positionY.value = e.translationY + context.value.y
        
@@ -140,18 +171,25 @@ export function PhotoRect(number : any)
         position.value = 0
     })
 
+    
+    
 
      const animatedStyle = useAnimatedStyle(() => ({
    
     transform: [{translateX: withSpring(position.value)}, {translateY: withSpring(positionY.value)}],
     
 }));
+
+    const deletephoto = () => {
+        setImage([])
+
+        console.log(image.length)
+    }
     
   
-    const innerref = useRef(null)
-
     
 
+        
 
-    return(<Pressable onPress={() => SelectPhoto(image.length)}><GestureDetector gesture={pan}><Animated.View ref={innerref} style={[styles.rectangle, animatedStyle]}><Image style={styles.imagerect}></Image><Circle style={styles.insidecir2} size={30}><View style={styles.plus1}></View><View style={styles.plus2}></View></Circle></Animated.View></GestureDetector></Pressable>)
+    return(<GestureDetector gesture={pan}><Animated.View   style={[styles.rectangle, animatedStyle]}>{image.length > 0 ? <Image source={{uri: image }}  style={styles.imagerect}/>: ""}{image.length > 0 ? <Circle onPress={deletephoto} style={styles.insidecir2} size={30}><View  style={styles.plus3}></View><View style={styles.plus4}></View></Circle> : <Circle onPress={() => SelectPhoto(image.length)} style={styles.insidecir2} size={30}><View  style={styles.plus1}></View><View style={styles.plus2}></View></Circle>}</Animated.View></GestureDetector>)
 }

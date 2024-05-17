@@ -11,5 +11,10 @@ export default function Forms()
         <Stack.Screen name="photos" options={{headerShown: false}}></Stack.Screen>
         <Stack.Screen name="nowlets" options={{headerShown: false}}></Stack.Screen>
         <Stack.Screen name="picksomeint" options={{headerShown: false}}></Stack.Screen>
+        <Stack.Screen name="vices" options={{headerShown:false}}></Stack.Screen>
+        <Stack.Screen name="sexuality" options={{headerShown:false}}></Stack.Screen>
+        <Stack.Screen name="religion" options={{headerShown:false}}></Stack.Screen>
+        <Stack.Screen name="relationship" options={{headerShown:false}}></Stack.Screen>
+        <Stack.Screen name="creating" options={{headerShown:false}}></Stack.Screen>
     </Stack>)
 }

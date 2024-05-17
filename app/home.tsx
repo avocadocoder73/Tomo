@@ -1,10 +1,12 @@
 import { View, Stack, Button, Form, Text, Image, Card, Separator, Group, Circle } from "tamagui";
-import { SafeAreaView, Pressable } from "react-native";
+import { SafeAreaView, Pressable, Platform } from "react-native";
 import { Link, useRouter } from "expo-router";
 import { StyleSheet } from "react-native";
 import SvgComponent from "./logo";
 import { LinearGradient } from 'expo-linear-gradient';
-import { AppleButton } from '@invertase/react-native-apple-authentication';
+import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import * as AppleAuthentication from 'expo-apple-authentication';
+
 
 
 export default function Login()
@@ -14,7 +16,7 @@ export default function Login()
         fonts:{
             fontSize: 35,
             color: "#DDB892",
-            fontFamily:"SatoshiMed"
+            fontFamily:"SatoshiBold"
         },
          background: {
         position: 'absolute',
@@ -27,7 +29,8 @@ export default function Login()
         centerfont:{
             fontSize: 60,
             color: "#DDB892",
-            marginTop: 5,
+            marginTop: -25,
+            marginBottom:25,
             fontFamily:"SatoshiBold"
         },
         form:{
@@ -61,7 +64,7 @@ export default function Login()
             color: "#B08968",
         },
         Terms:{
-            marginTop: 95,
+            marginTop: 85,
             fontSize: 12,
             width: 250,
             textAlign: "center",
@@ -85,27 +88,26 @@ export default function Login()
       />
       <SafeAreaView style={{display:'flex', justifyContent:"center", alignItems:"center"}}><View style={{height:"100%", width:"100%", display:"flex", alignItems:"center"}}>
            
-            <SvgComponent width={"100px"}></SvgComponent>
-            <Form style={styles.form} onSubmit={() => console.log("TEST")}>
+            <SvgComponent width={"150px"}></SvgComponent>
+         
 
-            <View style={{display:"flex", flexDirection:"row", alignItems:"center", width:"50%", justifyContent:"space-between"}}>
-                <View style={{width:"100px"}}><Separator borderColor={"#DDB892"} borderWidth={"1px"} borderRightWidth={"50px"}  ></Separator></View>
-                <View>
-                
-                <Circle size={30} backgroundColor={"white"} ></Circle>
-                
-                </View>
-            <View style={{width:"100px"}}><Separator borderColor={"#DDB892"} borderWidth={"1px"} borderLeftWidth={"50px"}></Separator></View>
-            </View>
-            <View style={{marginTop:40, marginBottom:-40, display:"flex", alignItems:'center'}}>
+           
+            <View style={{marginTop:10, marginBottom:-35, display:"flex", alignItems:'center', }}>
             <Text style={styles.fonts}>Welcome to</Text>
+            <View style={{position:"absolute", width:3, height:35, backgroundColor:"white", top: 0, zIndex:"-1"}}></View>
+            <View style={{position:"absolute", width:3, height:35, backgroundColor:"white", top: 10, left:65, transform:"rotate(-45deg)", zIndex:"-1"}}></View>
+            <View style={{position:"absolute", width:3, height:35, backgroundColor:"white", top: 10, left:125, transform:"rotate(45deg)",zIndex:"-1"}}></View>
+            <View style={{display:"flex", flexDirection:"row", alignItems:"center"}}><View style={{width:55, height:3, backgroundColor:"white",  marginRight:10}}></View><Circle size={30} backgroundColor={"white"} ></Circle><View style={{width:55, height:3, backgroundColor:"white", marginLeft:10}}></View></View>
+            <View style={{position:"absolute", width:3, height:35, backgroundColor:"white", top: 80, zIndex:"-1"}}></View>
+            <View style={{position:"absolute", width:3, height:35, backgroundColor:"white", top: 70, left:65, transform:"rotate(45deg)", zIndex:"-1"}}></View>
+            <View style={{position:"absolute", width:3, height:35, backgroundColor:"white", top: 70, left:125, transform:"rotate(-45deg)", zIndex:"-1"}}></View>
             <Text style={styles.centerfont}>Tomo</Text>
             </View>
            
 
             
             
-            <Button onPress={() => router.push('/forms/picksomeint')} style={styles.SignUp}>Sign Up For Free</Button>
+            <Button onPress={() => router.push('/signup')} style={styles.SignUp}>Sign Up For Free</Button>
                   
             
            
@@ -116,8 +118,9 @@ export default function Login()
             </View>
             <View>
 
-                <Button style={styles.Social}>Continue with Apple</Button>
-                <Button style={styles.Social}>Continue with Google</Button>
+                <AppleAuthentication.AppleAuthenticationButton style={{width:320, height:44, marginTop: 25,}} cornerRadius={10} buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+        buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE} onPress={() => console.log("TEST")}/>
+                 <Button style={styles.Social} >Continue with Google</Button>
                 <Button style={styles.Social} >Continue with Phone #</Button>
             </View>
             <View>
@@ -126,7 +129,7 @@ export default function Login()
             <View>
                 <Text style={styles.Terms}>By signing up for Tomo, you agree to our Terms and Privacy Policy</Text>
             </View>
-            </Form>
+            
         
     </View></SafeAreaView></View>)
 }

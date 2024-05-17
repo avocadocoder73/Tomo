@@ -18,6 +18,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {PhotoRect} from "./draggable";
 import ProfilePicture from "./profilepicture";
+import { useCallback } from "react";
 
 export default function Photos()
 {
@@ -158,35 +159,42 @@ export default function Photos()
     
 }));
 
- 
+ const t = useCallback((event : any) => {
+      
+        console.log(event.nativeEvent.layout.y)
+        
+    }, [])
   
+
+
+
 
     return(<GestureHandlerRootView><View style={{height:"100%"}}><Pressable onPress={() => router.navigate('/signup')} ><SvgComponent width={"75px"} style={{marginLeft:10}}></SvgComponent></Pressable><SafeAreaView>
         <View style={{display:"flex",flexDirection:"row", width:"100%"}}>
        
         <ProfilePicture></ProfilePicture>
         <View style={{width:200, height:"100%"}}>
-            <Text>Add some photos to setup your profile!</Text>
+            <Text style={{fontFamily:"SatoshiBold"}}>Add some photos to setup your profile!</Text>
         </View>
         </View>
        
         <View style={{marginTop:30, display:"flex", flexDirection:"column"}}>
-            <View style={{display:"flex", flexDirection:"row"}}>
+            <View onLayout={t} style={{display:"flex", flexDirection:"row"}}>
             <PhotoRect  number={0} ></PhotoRect>
             <PhotoRect  number={1}></PhotoRect>
             <PhotoRect  number={2}></PhotoRect>
            </View>
            
-            <View style={{display:"flex", flexDirection:"row"}}>
+            <View onLayout={t} style={{display:"flex", flexDirection:"row"}}>
             
-              <PhotoRect id="phot3" number={3}></PhotoRect>
+              <PhotoRect  id="phot3" number={3}></PhotoRect>
               <PhotoRect  id="phot4" number={4}></PhotoRect>
               <PhotoRect  id="phot5"number={5}></PhotoRect>
             
             </View>
         </View>
         
-        </SafeAreaView><Button style={styles.continuebut} onPress={() => router.push('/forms/picksomeint')}><Button.Text style={styles.buttxt}>Continue</Button.Text></Button></View></GestureHandlerRootView>)
+        </SafeAreaView><Button style={styles.continuebut} onPress={() => router.push('/forms/nowlets')}><Button.Text style={styles.buttxt}>Continue</Button.Text></Button></View></GestureHandlerRootView>)
 }
 
 
